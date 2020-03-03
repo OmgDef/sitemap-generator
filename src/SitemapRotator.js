@@ -19,7 +19,13 @@ module.exports = function SitemapRotator(
     }, []);
 
   // adds url to stream
-  const addURL = (url, depth, lastMod = getCurrentDateTime()) => {
+  const addURL = (
+    url,
+    depth,
+    freq = null,
+    priority = null,
+    lastMod = getCurrentDateTime()
+  ) => {
     const currentDateTime = lastModEnabled ? lastMod : null;
 
     // exclude existing sitemap.xml
@@ -41,17 +47,15 @@ module.exports = function SitemapRotator(
       count = 0;
     }
 
-    let priority = '';
-
     // if priorityMap exists, set priority based on depth
     // if depth is greater than map length, use the last value in the priorityMap
-    if (priorityMap && priorityMap.length > 0) {
+    if (!priority && priorityMap && priorityMap.length > 0) {
       priority = priorityMap[depth - 1]
         ? priorityMap[depth - 1]
         : priorityMap[priorityMap.length - 1];
     }
 
-    current.write(url, currentDateTime, changeFreq, priority);
+    current.write(url, currentDateTime, freq ? freq : changeFreq, priority);
 
     count += 1;
   };
