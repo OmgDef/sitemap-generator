@@ -134,7 +134,7 @@ module.exports = function SitemapGenerator(uri, opts) {
   });
 
   function moveImagesSitemap(cb) {
-    imagesSitemapPath.finish();
+    imageSitemap.finish();
     const imageSitemaps = imageSitemap.getPaths();
 
     if (imagesSitemapPath !== null) {
